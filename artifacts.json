@@ -1,0 +1,93 @@
+{
+    "conditions": [
+        "Поганий",
+        "Задовільний",
+        "Добрий",
+        "Добре вiдремонтований",
+        "Відмінний"
+    ],
+    "categories": [
+        "Документ",
+        "Реліквія",
+        "Скарб",
+        "Скульптура"
+    ],
+    "days_of_week": [
+        "Понеділок",
+        "Вівторок",
+        "Середа",
+        "Четвер",
+        "П'ятниця",
+        "Субота",
+        "Неділя"
+    ],
+    "statuses": [
+        "На виставці",
+        "У сховищі",
+        "На реставрації",
+        "Втрачений"
+    ],
+    "max_list_size": 10,
+    "artifacts": [
+        {
+            "name": "Маска Тутанхамона",
+            "age": "3300",
+            "origin": "Стародавній Єгипет",
+            "material": "Золото, лазурит, бірюза",
+            "description": "Золота похоронна маска фараона",
+            "condition": "Відмінний",
+            "category": "Реліквія",
+            "discovery_day": "Понеділок",
+            "status": "На виставці",
+            "image_path": "images\\artifact1.jpg"
+        },
+        {
+            "name": "Камінь Розетти",
+            "age": "2250",
+            "origin": "Стародавній Єгипет",
+            "material": "Граніт",
+            "description": "Ключ до розшифровки єгипетських ієрогліфів",
+            "condition": "Добрий",
+            "category": "Документ",
+            "discovery_day": "Середа",
+            "status": "На виставці",
+            "image_path": "images\\artifact2.jpg"
+        },
+        {
+            "name": "Теракотова армія",
+            "age": "2200",
+            "origin": "Стародавній Китай",
+            "material": "Глина",
+            "description": "Армія глиняних воїнів імператора",
+            "condition": "Задовільний",
+            "category": "Скульптура",
+            "discovery_day": "П'ятниця",
+            "status": "У сховищі",
+            "image_path": "images\\artifact3.jpg"
+        },
+        {
+            "name": "Копiйка",
+            "age": "20",
+            "origin": "Украiна",
+            "material": "Желiзо",
+            "description": "Украiнська копiйка",
+            "condition": "Добрий",
+            "category": "Скульптура",
+            "discovery_day": "Четвер",
+            "status": "Втрачений",
+            "image_path": "images\\artifact4.jpg"
+        },
+        {
+            "name": "Копейка",
+            "age": "123",
+            "origin": "Украина",
+            "material": "Железо",
+            "description": "Копейка",
+            "condition": "Поганий",
+            "category": "Документ",
+            "discovery_day": "Понеділок",
+            "status": "На виставці",
+            "image_path": "images\\artifact5.jpg"
+        }
+    ]
+}
