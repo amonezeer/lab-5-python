@@ -1,0 +1,71 @@
+{
+    "conditions": [
+        "Відмінний",
+        "Добрий",
+        "Задовільний",
+        "Поганий"
+    ],
+    "categories": [
+        "Реліквія",
+        "Скарб",
+        "Документ",
+        "Скульптура"
+    ],
+    "days_of_week": [
+        "Понеділок",
+        "Вівторок",
+        "Середа",
+        "Четвер",
+        "П'ятниця",
+        "Субота",
+        "Неділя"
+    ],
+    "statuses": [
+        "На виставці",
+        "У сховищі",
+        "На реставрації",
+        "Втрачений"
+    ],
+    "max_list_size": 10,
+    "artifacts": [
+        {
+            "name": "Маска Тутанхамона",
+            "age": "3300",
+            "origin": "Стародавній Єгипет",
+            "material": "Золото, лазурит, бірюза",
+            "description": "Золота похоронна маска фараона",
+            "condition": "Відмінний",
+            "category": "Реліквія",
+            "discovery_day": "Понеділок",
+            "status": "На виставці",
+            "image_path": "images//artifact1.jpg",
+            "original_image_name": ""
+        },
+        {
+            "name": "Камінь Розетти",
+            "age": "2250",
+            "origin": "Стародавній Єгипет",
+            "material": "Граніт",
+            "description": "Ключ до розшифровки єгипетських ієрогліфів",
+            "condition": "Добрий",
+            "category": "Документ",
+            "discovery_day": "Середа",
+            "status": "На виставці",
+            "image_path": "images//artifact2.jpg",
+            "original_image_name": ""
+        },
+        {
+            "name": "Теракотова армія",
+            "age": "2200",
+            "origin": "Стародавній Китай",
+            "material": "Глина",
+            "description": "Армія глиняних воїнів імператора",
+            "condition": "Задовільний",
+            "category": "Скульптура",
+            "discovery_day": "П'ятниця",
+            "status": "У сховищі",
+            "image_path": "images//artifact3.jpg",
+            "original_image_name": ""
+        }
+    ]
+}
