@@ -1,15 +1,14 @@
 {
     "conditions": [
-        "Поганий",
-        "Задовільний",
+        "Відмінний",
         "Добрий",
-        "Добре вiдремонтований",
-        "Відмінний"
+        "Задовільний",
+        "Поганий"
     ],
     "categories": [
-        "Документ",
         "Реліквія",
         "Скарб",
+        "Документ",
         "Скульптура"
     ],
     "days_of_week": [
@@ -39,7 +38,8 @@
             "category": "Реліквія",
             "discovery_day": "Понеділок",
             "status": "На виставці",
-            "image_path": "images\\artifact1.jpg"
+            "image_path": "images//artifact1.jpg",
+            "original_image_name": ""
         },
         {
             "name": "Камінь Розетти",
@@ -51,7 +51,8 @@
             "category": "Документ",
             "discovery_day": "Середа",
             "status": "На виставці",
-            "image_path": "images\\artifact2.jpg"
+            "image_path": "images//artifact2.jpg",
+            "original_image_name": ""
         },
         {
             "name": "Теракотова армія",
@@ -63,31 +64,8 @@
             "category": "Скульптура",
             "discovery_day": "П'ятниця",
             "status": "У сховищі",
-            "image_path": "images\\artifact3.jpg"
-        },
-        {
-            "name": "Копiйка",
-            "age": "20",
-            "origin": "Украiна",
-            "material": "Желiзо",
-            "description": "Украiнська копiйка",
-            "condition": "Добрий",
-            "category": "Скульптура",
-            "discovery_day": "Четвер",
-            "status": "Втрачений",
-            "image_path": "images\\artifact4.jpg"
-        },
-        {
-            "name": "Копейка",
-            "age": "123",
-            "origin": "Украина",
-            "material": "Железо",
-            "description": "Копейка",
-            "condition": "Поганий",
-            "category": "Документ",
-            "discovery_day": "Понеділок",
-            "status": "На виставці",
-            "image_path": "images\\artifact5.jpg"
+            "image_path": "images//artifact3.jpg",
+            "original_image_name": ""
         }
     ]
 }
