@@ -72,6 +72,19 @@ class DetailedArtifact(Artifact):
 
 # Клас для графічного інтерфейсу
 class ArtifactApp:
+
+    def clear_search_entry(self):
+        self.search_entry.delete(0, tk.END)
+        self.add_placeholder(None)
+
+    def clear_filters(self):
+        self.condition_var.set("Усі")
+        self.category_var.set("Усі")
+        self.day_var.set("Усі")
+        self.status_var.set("Усі")
+        self.search_info_label.config(text="")
+        self.search_image_label.config(image="")
+
     def __init__(self, root):
         self.root = root
         self.root.title("Каталог артефактів")
@@ -130,6 +143,7 @@ class ArtifactApp:
         self.search_entry.bind("<FocusIn>", self.clear_placeholder)
         self.search_entry.bind("<FocusOut>", self.add_placeholder)
         ttk.Button(self.search_frame, text="Пошук 🔍", command=self.search_artifact).pack(side=tk.LEFT, padx=5)
+        ttk.Button(self.search_frame, text="Очистити 🗑️", command=self.clear_search_entry).pack(side=tk.LEFT, padx=5)
 
         # Основной фрейм для содержимого вкладки "Пошук"
         self.main_search_frame = tk.Frame(self.search_tab, bg="#f0f0f0")
@@ -169,6 +183,7 @@ class ArtifactApp:
         self.status_menu.pack(pady=5)
 
         ttk.Button(self.filters_frame, text="Пошук 🔍", command=self.filter_search).pack(pady=10)
+        ttk.Button(self.filters_frame, text="Очистити 🗑️", command=self.clear_filters).pack(pady=10)
 
         # Центральная часть: фото и описание артефакта
         self.search_info_frame = tk.Frame(self.main_search_frame, bg="#f0f0f0", bd=2, relief="groove")
@@ -364,10 +379,45 @@ class ArtifactApp:
         self.edit_bottom_frame.pack(fill=tk.X, padx=10, pady=5)
         ttk.Button(self.edit_bottom_frame, text="Зберегти зміни 💾", command=self.save_artifact_changes).pack(pady=10)
 
+        # Вкладка "Видалення артефактів"
+        self.delete_tab = ttk.Frame(self.notebook)
+        self.notebook.add(self.delete_tab, text="Видалення артефактів")
+
+        self.delete_main_frame = tk.Frame(self.delete_tab, bg="#f0f0f0")
+        self.delete_main_frame.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
+
+        self.delete_left_frame = tk.Frame(self.delete_main_frame, bg="#f0f0f0", bd=2, relief="groove")
+        self.delete_left_frame.pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=5)
+
+        tk.Label(self.delete_left_frame, text="Виберіть артефакт для видалення:", bg="#f0f0f0", fg="#333333",
+                 font=("Arial", 12)).pack(pady=5)
+        self.delete_artifact_listbox = tk.Listbox(self.delete_left_frame, height=15, width=30, bg="#ffffff",
+                                                  fg="#333333", font=("Arial", 10))
+        self.delete_artifact_listbox.pack(pady=5)
+        self.update_delete_artifact_listbox()
+
+        self.delete_image_display_label = tk.Label(self.delete_left_frame, bg="#f0f0f0")
+        self.delete_image_display_label.pack(pady=5)
+
+        self.delete_artifact_listbox.bind("<<ListboxSelect>>", self.on_delete_artifact_select)
+
+        self.delete_right_frame = tk.Frame(self.delete_main_frame, bg="#f0f0f0", bd=2, relief="groove")
+        self.delete_right_frame.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True, padx=5)
+
+        self.delete_info_label = tk.Label(self.delete_right_frame, text="Виберіть артефакт для перегляду деталей",
+                                          justify="left", bg="#f0f0f0", fg="#333333", font=("Arial", 12),
+                                          wraplength=400)
+        self.delete_info_label.pack(pady=10, padx=10, fill=tk.BOTH, expand=True)
+
+        self.delete_bottom_frame = tk.Frame(self.delete_tab, bg="#f0f0f0")
+        self.delete_bottom_frame.pack(fill=tk.X, padx=10, pady=5)
+        ttk.Button(self.delete_bottom_frame, text="Видалити артефакт 🗑️", command=self.delete_artifact).pack(pady=10)
+
         self.current_artifact = None
         self.show_artifact()
 
         self.root.protocol("WM_DELETE_WINDOW", self.on_closing)
+
 
     def load_data(self):
         if os.path.exists(BIN_FILE):
@@ -645,6 +695,7 @@ class ArtifactApp:
         self.artifacts.append(new_artifact)
         self.update_artifact_listbox()
         self.update_edit_artifact_listbox()
+        self.update_delete_artifact_listbox()
         self.save_data()
 
         self.add_name_entry.delete(0, tk.END)
@@ -1103,14 +1154,29 @@ class ArtifactApp:
         # Створюємо нове вікно для відображення списків
         lists_window = Toplevel(self.root)
         lists_window.title("Списки станів і категорій")
-        lists_window.geometry("400x400")
+
+        # Розмір вікна
+        window_width = 400
+        window_height = 400
+
+        # Отримуємо розміри екрану
+        screen_width = lists_window.winfo_screenwidth()
+        screen_height = lists_window.winfo_screenheight()
+
+        # Обчислюємо координати для центру екрану
+        x = (screen_width - window_width) // 2
+        y = (screen_height - window_height) // 2
+
+        # Встановлюємо розмір і позицію вікна
+        lists_window.geometry(f"{window_width}x{window_height}+{x}+{y}")
 
         # Фрейм для списків
         lists_frame = tk.Frame(lists_window, bg="#f0f0f0")
         lists_frame.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
 
         # Список станів
-        conditions_frame = tk.LabelFrame(lists_frame, text="СТАНИ", bg="#f0f0f0", fg="#333333", font=("Arial", 12, "bold"))
+        conditions_frame = tk.LabelFrame(lists_frame, text="СТАНИ", bg="#f0f0f0", fg="#333333",
+                                         font=("Arial", 12, "bold"))
         conditions_frame.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
         conditions_listbox = tk.Listbox(conditions_frame, height=5, bg="#ffffff", fg="#333333", font=("Arial", 10))
         conditions_listbox.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
@@ -1118,14 +1184,83 @@ class ArtifactApp:
             conditions_listbox.insert(tk.END, condition)
 
         # Список категорій
-        categories_frame = tk.LabelFrame(lists_frame, text="КАТЕГОРІЇ", bg="#f0f0f0", fg="#333333", font=("Arial", 12, "bold"))
+        categories_frame = tk.LabelFrame(lists_frame, text="КАТЕГОРІЇ", bg="#f0f0f0", fg="#333333",
+                                         font=("Arial", 12, "bold"))
         categories_frame.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
         categories_listbox = tk.Listbox(categories_frame, height=5, bg="#ffffff", fg="#333333", font=("Arial", 10))
         categories_listbox.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
         for category in self.categories:
             categories_listbox.insert(tk.END, category)
 
+    def update_delete_artifact_listbox(self):
+        self.delete_artifact_listbox.delete(0, tk.END)
+        for artifact in self.artifacts:
+            self.delete_artifact_listbox.insert(tk.END, f"{artifact.name} ({artifact.age} років)")
+
+    def on_delete_artifact_select(self, event):
+        if not self.delete_artifact_listbox.curselection():
+            return
+        index = self.delete_artifact_listbox.curselection()[0]
+        artifact = self.artifacts[index]
+
+        self.delete_info_label.config(text=artifact.get_full_info())
+        photo = self.load_image(artifact.image_path)
+        if photo:
+            self.delete_image_display_label.config(image=photo)
+            self.delete_image_display_label.image = photo
+        else:
+            self.delete_image_display_label.config(image="")
+
+    def delete_artifact(self):
+        if not self.delete_artifact_listbox.curselection():
+            messagebox.showerror("Помилка", "Виберіть артефакт для видалення!")
+            return
+
+        index = self.delete_artifact_listbox.curselection()[0]
+        artifact = self.artifacts[index]
+
+        if not messagebox.askyesno("Підтвердження", f"Ви впевнені, що хочете видалити артефакт '{artifact.name}'?"):
+            return
+
+        # Видаляємо зображення з файлової системи
+        if artifact.image_path and os.path.exists(artifact.image_path):
+            try:
+                os.remove(artifact.image_path)
+            except Exception as e:
+                messagebox.showwarning("Попередження", f"Не вдалося видалити зображення: {e}")
+
+        # Видаляємо зображення з кешу
+        if artifact.image_path in self.image_cache:
+            del self.image_cache[artifact.image_path]
+
+        # Видаляємо оригінальну назву зображення зі списку використаних
+        if artifact.original_image_name in self.used_image_names:
+            self.used_image_names.remove(artifact.original_image_name)
+
+        # Видаляємо артефакт зі списку
+        self.artifacts.pop(index)
+
+        # Оновлюємо всі списки
+        self.update_artifact_listbox()
+        self.update_edit_artifact_listbox()
+        self.update_delete_artifact_listbox()
+
+        # Очищаємо відображення
+        self.delete_info_label.config(text="Виберіть артефакт для перегляду деталей")
+        self.delete_image_display_label.config(image="")
+
+        # Оновлюємо індекс для перегляду, якщо потрібно
+        if self.current_artifact_index >= len(self.artifacts) and self.artifacts:
+            self.current_artifact_index = len(self.artifacts) - 1
+        elif not self.artifacts:
+            self.current_artifact_index = 0
+        self.show_artifact()
+
+        # Зберігаємо зміни у файли
+        self.save_data()
+        messagebox.showinfo("Успіх", f"Артефакт '{artifact.name}' успішно видалено!")
+
 if __name__ == "__main__":
-    root = tk.Tk()
-    app = ArtifactApp(root)
-    root.mainloop()
+        root = tk.Tk()
+        app = ArtifactApp(root)
+        root.mainloop()

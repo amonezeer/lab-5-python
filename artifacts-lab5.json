@@ -3,7 +3,8 @@
         "Відмінний",
         "Добрий",
         "Задовільний",
-        "Поганий"
+        "Поганийй",
+        "Гуд"
     ],
     "categories": [
         "Реліквія",
@@ -66,6 +67,19 @@
             "status": "У сховищі",
             "image_path": "images//artifact3.jpg",
             "original_image_name": ""
+        },
+        {
+            "name": "324243",
+            "age": "12312",
+            "origin": "123123",
+            "material": "12312321231",
+            "description": "123123123",
+            "condition": "Відмінний",
+            "category": "Реліквія",
+            "discovery_day": "Понеділок",
+            "status": "На виставці",
+            "image_path": "images\\artifact4.jpg",
+            "original_image_name": "шеф.jpg"
         }
     ]
 }
